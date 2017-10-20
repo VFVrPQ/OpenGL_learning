@@ -3,7 +3,7 @@
 学习网站：http://www.lighthouse3d.com/tutorials/glut-tutorial/initialization/
 
 我的openGL：
-做的是抛球游戏。是计算机图形学期末作业的物理部分。
+简单的射箭（线段）的游戏。是计算机图形学期末作业的物理部分。
 有箭（现在是球）的重力，简单的碰撞检测，还有弓箭的弦的曲线（三个点或者更多点确定弧线，用线性BezierCurve实现）。。。
 
 
