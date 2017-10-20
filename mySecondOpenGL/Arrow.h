@@ -14,7 +14,7 @@
 //箭头的结构体,用于物理引擎
 //现在已经做好了重力 和 碰撞检测
 struct Arrow {
-	float ti = 0.01;//每flame过去的时间
+	float ti = 0.001;//每flame过去的时间
 	int state;//0:未创建；1：已创建在手上；2：已创建起飞；3：落地或中靶
 
 	Vec3 position, speed, acc;//位置，速度，加速度
@@ -28,13 +28,16 @@ struct Arrow {
 	void setTi(float tii) {
 		ti = tii;
 	}
+	void setSpeed(Vec3 mSpeed) {
+		speed = mSpeed;
+	}
 	//创建箭,pos箭头的位置
 	void create(Vec3 pos)
 	{
 		if (state == 0 || state == 1 || state == 3) {
 			position = Vec3(pos.x, pos.y, pos.z);
-			speed = Vec3(0, 0, 0);
-			acc = Vec3(0, -9.8, 0);
+			speed = Vec3(0.0f, 0.0f, 0.0f);
+			acc = Vec3(0.0f, -9.8f, 0.0f);
 			state = 1;
 		}
 	}
@@ -70,13 +73,19 @@ struct Arrow {
 		return false;
 	}
 	//作为物理引擎，这个函数可以忽略
-	void drawStick(AABB aabb,Vec3 speed) {
+	void drawStick(AABB aabb) {
 		//draw
 		if (state != 0) {//箭必须创建了才显示
-			glColor3f(1.0f, 1.0f, 0.0f);
-			glTranslatef(position.x, position.y + 0.05, position.z);
-			glutSolidSphere(0.05f, 20, 20);
-			glTranslatef(-position.x, -position.y - 0.05, -position.z);
+			//模型线段的位置是（0，0，0),(3，0，0)
+			Vec3 ojbk = Vec3(3, 0, 0);
+
+			ojbk.rotate(speed);//当前速度
+
+			printf("ojbk:%f %f %f\n", ojbk.x, ojbk.y, ojbk.z);
+			glBegin(GL_LINES);
+			glVertex3f(position.x, position.y, position.z);
+			glVertex3f(position.x+ojbk.x, position.y+ojbk.y, position.z+ojbk.z);
+			glEnd();
 
 			//瞄准的时候辅助画出轨迹
 			if (state == 1 || state == 2) {//state == 1

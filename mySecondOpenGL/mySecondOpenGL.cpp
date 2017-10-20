@@ -225,7 +225,7 @@ void renderScene(void) {
 		0.0f, 1.0f, 0.0f);
 
 	mArrow.move(Vec3(x + lx, 1.0f, z + lz),aabb);
-	mArrow.drawStick(aabb,Vec3((lx + 0.1)*10.0f, 5.0f, (lz + 0.1)*10.0f));
+	mArrow.drawStick(aabb);
 	// Draw ground
 	
 	glColor3f(0.9f, 0.9f, 0.9f);
@@ -320,6 +320,7 @@ void processNormalKeys(unsigned char key, int xx, int yy) {
 		exit(0);
 		break;
 	case 's'://shoot
+		mArrow.setSpeed(Vec3((lx + 0.1)*10.0f, 5.0f, (lz + 0.1)*10.0f));
 		mArrow.shoot(Vec3((lx+0.1)*10.0f, 5.0f, (lz+0.1)*10.0f));
 		break;
 	case 'c'://create
